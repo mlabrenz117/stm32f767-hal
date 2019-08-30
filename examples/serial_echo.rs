@@ -30,13 +30,13 @@ fn main() -> ! {
     let (mut tx, mut rx) = serial.split();
 
     loop {
-        led.set_high();
+        led.set_high().expect("GPIO cannot fail");
         let received = block!(rx.read()).unwrap_or(b'E');
         block!(tx.write(received)).ok();
 
         // Turn PB7 off for a bit
         for _ in 0..2_000_000 {
-            led.set_low();
+            led.set_low().expect("GPIO cannot fail");
         }
     }
 }

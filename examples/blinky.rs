@@ -22,12 +22,12 @@ fn main() -> ! {
     loop {
         // Turn PB7 on a million times in a row.
         for _ in 0..1_000_000 {
-            led.set_high();
+            led.set_high().expect("GPIO cannot fail");
         }
 
         // Then turn PB7 off a million times in a row.
         for _ in 0..1_000_000 {
-            led.set_low();
+            led.set_low()expect("GPIO cannot fail");
         }
     }
 }

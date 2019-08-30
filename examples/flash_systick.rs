@@ -74,13 +74,13 @@ fn SysTick() {
 
             if *STATE < 10 {
                 // If set turn off the LED.
-                led.set_low();
+                led.set_low().expect("GPIO cannot fail");
 
                 // And now increment state variable.
                 *STATE += 1;
             } else {
                 // If not set, turn on the LED.
-                led.set_high();
+                led.set_high().expect("GPIO cannot fail");
 
                 // And set new state variable back to 0.
                 *STATE = 0;

@@ -1,4 +1,5 @@
 #![deny(unsafe_code)]
+#![deny(warnings)]
 #![no_std]
 #![no_main]
 
@@ -51,10 +52,10 @@ const APP: () = {
         resources.TIMER.clear_update_interrupt_flag();
 
         if *STATE {
-            resources.LED.set_low();
+            resources.LED.set_low().expect("GPIO cannot fail");
             *STATE = false;
         } else {
-            resources.LED.set_high();
+            resources.LED.set_high().expect("GPIO cannot fail");
             *STATE = true;
         }
     }
