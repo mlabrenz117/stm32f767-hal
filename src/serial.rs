@@ -87,7 +87,7 @@ impl<PINS> Serial<USART1, PINS> {
         let rcc = unsafe { &(*RCC::ptr()) };
 
         // Use sysclock for baudrate
-        rcc.dkcfgr2.modify(|_, w| unsafe { w.usart1sel().bits(1) });
+        rcc.dckcfgr2.modify(|_, w| w.usart1sel().sysclk());
 
         /* Enable clock for USART */
         rcc.apb2enr.modify(|_, w| w.usart1en().set_bit());
@@ -138,7 +138,9 @@ impl hal::serial::Read<u8> for Rx<USART1> {
             nb::Error::Other(Error::Overrun)
         } else if isr.rxne().bit_is_set() {
             // NOTE(read_volatile) see `write_volatile` below
-            return Ok(unsafe { ptr::read_volatile(&(*USART1::ptr()).rdr as *const _ as *const _) });
+            return Ok(unsafe {
+                ptr::read_volatile(&(*USART1::ptr()).rdr as *const _ as *const _)
+            });
         } else {
             nb::Error::WouldBlock
         })
@@ -184,7 +186,7 @@ impl<PINS> Serial<USART2, PINS> {
         let rcc = unsafe { &(*RCC::ptr()) };
 
         // Use sysclock for baudrate
-        rcc.dkcfgr2.modify(|_, w| unsafe { w.usart2sel().bits(1) });
+        rcc.dckcfgr2.modify(|_, w| w.usart2sel().sysclk());
 
         /* Enable clock for USART */
         rcc.apb1enr.modify(|_, w| w.usart2en().set_bit());
@@ -235,7 +237,9 @@ impl hal::serial::Read<u8> for Rx<USART2> {
             nb::Error::Other(Error::Overrun)
         } else if isr.rxne().bit_is_set() {
             // NOTE(read_volatile) see `write_volatile` below
-            return Ok(unsafe { ptr::read_volatile(&(*USART2::ptr()).rdr as *const _ as *const _) });
+            return Ok(unsafe {
+                ptr::read_volatile(&(*USART2::ptr()).rdr as *const _ as *const _)
+            });
         } else {
             nb::Error::WouldBlock
         })
@@ -281,7 +285,7 @@ impl<PINS> Serial<USART3, PINS> {
         let rcc = unsafe { &(*RCC::ptr()) };
 
         // Use sysclock for baudrate
-        rcc.dkcfgr2.modify(|_, w| unsafe { w.usart3sel().bits(1) });
+        rcc.dckcfgr2.modify(|_, w| w.usart3sel().sysclk());
 
         /* Enable clock for USART */
         rcc.apb1enr.modify(|_, w| w.usart3en().set_bit());
@@ -332,7 +336,9 @@ impl hal::serial::Read<u8> for Rx<USART3> {
             nb::Error::Other(Error::Overrun)
         } else if isr.rxne().bit_is_set() {
             // NOTE(read_volatile) see `write_volatile` below
-            return Ok(unsafe { ptr::read_volatile(&(*USART3::ptr()).rdr as *const _ as *const _) });
+            return Ok(unsafe {
+                ptr::read_volatile(&(*USART3::ptr()).rdr as *const _ as *const _)
+            });
         } else {
             nb::Error::WouldBlock
         })
